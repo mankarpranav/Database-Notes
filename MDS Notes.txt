@@ -1,0 +1,739 @@
+﻿**Software Requirements Specification (SRS) for Krushi Kendra Online Management System**
+
+
+**1. Introduction**
+
+
+The Krushi Kendra Online Management System is a software application designed to streamline and automate the operations of Krushi Kendra, an agricultural service center. The system aims to provide a centralized platform for managing various activities related to crop cultivation, farmer registration, inventory management, sales, and reporting. This document outlines the functional and non-functional requirements of the system, providing a comprehensive description of its features and capabilities.
+
+
+**2. Functional Requirements**
+
+
+2.1. User Management
+- The system shall support multiple user roles such as administrators, farmers, and staff members.
+- Users shall be able to register and create their accounts with the system.
+- Administrators shall have the ability to manage user accounts, including creating, updating, and deleting them.
+- User authentication and access control mechanisms shall be implemented to ensure secure access to the system.
+
+
+2.2. Farmer Management
+- Farmers shall be able to register themselves in the system by providing their personal information, contact details, and land details.
+- Farmers shall be able to update their profile information, including contact details and land information.
+- The system shall maintain a database of registered farmers, allowing staff members to search and retrieve farmer information easily.
+- Farmers shall be able to view and track their crop-related activities, including sowing, irrigation, fertilization, and harvesting.
+
+
+2.3. Crop Management
+- The system shall provide a catalog of various crops along with their details such as cultivation methods, preferred soil type, and suitable climate conditions.
+- Staff members shall be able to add new crop entries to the catalog or update existing ones.
+- Farmers shall be able to view the crop catalog and select the crops they intend to cultivate.
+- The system shall generate personalized crop cultivation plans based on the selected crops and provide them to the respective farmers.
+
+
+2.4. Inventory Management
+- The system shall maintain an inventory of agricultural inputs such as seeds, fertilizers, and pesticides.
+- Staff members shall be able to add new items to the inventory, update item quantities, and remove items when they are consumed or expired.
+- Farmers shall be able to view the available inventory and request the required items.
+- The system shall track inventory usage and generate alerts when the stock of a particular item falls below a predefined threshold.
+
+
+2.5. Sales and Billing
+- The system shall support the sale of agricultural produce and other related products.
+- Staff members shall be able to create sales orders, specify the items sold, and calculate the total amount due.
+- The system shall generate invoices for sales transactions and provide options for payment.
+- Staff members shall be able to view the sales history, including details of past transactions.
+
+
+2.6. Reporting
+- The system shall generate reports on various aspects such as crop cultivation, inventory status, sales performance, and financial summaries.
+- Administrators and staff members shall be able to generate reports based on selected parameters, such as date range or specific crops.
+- Reports shall be presented in a user-friendly format, allowing for filtering, sorting, and exporting options.
+
+
+**3. Non-Functional Requirements**
+
+
+3.1. Usability
+- The system shall have a user-friendly interface, ensuring ease of use for all types of users.
+- Clear and intuitive navigation shall be implemented to facilitate smooth interaction with the system.
+- Adequate user documentation and help resources shall be provided.
+
+
+3.2. Performance
+- The system shall be capable of handling a large number of concurrent users without significant performance degradation.
+- Response times for critical operations shall be within acceptable limits.
+- The system shall have sufficient storage capacity to handle the expected amount of data.
+
+
+3.3. Security
+- The system shall implement appropriate security measures, including user authentication and authorization mechanisms, to ensure that only authorized individuals can access and modify the system.
+- User passwords shall be securely stored using encryption techniques.
+- The system shall employ secure communication protocols (e.g., HTTPS) to protect data during transmission.
+- Data privacy and confidentiality shall be maintained, adhering to relevant regulations and best practices.
+
+
+3.4. Reliability
+- The system shall be highly reliable and available, minimizing downtime and ensuring continuous access for users.
+- Measures such as data backups and redundancy shall be implemented to prevent data loss in case of system failures or disasters.
+- The system shall have a mechanism for error handling and recovery, providing appropriate error messages to users when errors occur.
+
+
+3.5. Scalability
+- The system shall be designed to accommodate future growth and increased user loads.
+- It should be capable of scaling horizontally by adding more servers or vertically by upgrading hardware resources to handle increased system demands.
+
+
+3.6. Compatibility
+- The system shall be compatible with commonly used web browsers and operating systems.
+- It should adhere to web standards and accessibility guidelines to ensure a consistent user experience across different platforms.
+
+
+3.7. Performance Testing
+- The system shall undergo performance testing to validate its responsiveness, scalability, and stability under various load conditions.
+- Performance benchmarks shall be established to ensure that the system meets the defined performance criteria.
+
+
+3.8. Maintenance and Support
+- The system shall be designed to facilitate ease of maintenance and future enhancements.
+- Proper documentation shall be provided to aid system administrators and developers in understanding and maintaining the system.
+- Technical support shall be available to address user queries, issues, and bug reports in a timely manner.
+
+
+**4. Constraints**
+
+
+- The system development shall adhere to budgetary constraints and timelines specified by the project stakeholders.
+- The system shall comply with relevant legal and regulatory requirements related to data protection and privacy.
+- The system shall utilize existing infrastructure and technology platforms available at Krushi Kendra, considering any limitations they may impose.
+
+
+This Software Requirements Specification (SRS) provides a comprehensive overview of the functional and non-functional requirements for the Krushi Kendra Online Management System. It serves as a foundation for the system design, development, and implementation processes.
+              +-----------------+
+        |     User        |
+        +-----------------+
+        | User_ID (PK)    |
+        | Name            |
+        | Role            |
+        | Email           |
+        | Password        |
+        +-----------------+
+              |
+              |
+              | 1
+              |
+              |
+        +-----------------+
+        |     Farmer      |
+        +-----------------+
+        | Farmer_ID (PK)  |
+        | Name            |
+        | Contact_Number  |
+        | Email           |
+        | Land_Details    |
+        +-----------------+
+              |
+              |
+              | N
+              |
+              |
+        +-----------------+
+        |      Crop       |
+        +-----------------+
+        | Crop_ID (PK)    |
+        | Crop_Name       |
+        | Cultivation_Method |
+        | Soil_Type       |
+        | Climate         |
+        +-----------------+
+              |
+              |
+              | N
+              |
+              |
+        +-----------------+
+        |    Inventory    |
+        +-----------------+
+        | Item_ID (PK)    |
+        | Item_Name       |
+        | Quantity        |
+        | Expiry_Date     |
+        +-----------------+
+              |
+              |
+              | N
+              |
+              |
+        +-----------------+
+        |     Sales       |
+        +-----------------+
+        | Sales_ID (PK)   |
+        | Farmer_ID (FK)  |
+        | Item_ID (FK)    |
+        | Quantity        |
+        | Total_Amount    |
+        | Date            |
+        +-----------------+
+
+
+CREATE TABLE User (
+  User_ID INT PRIMARY KEY,
+  Name VARCHAR(255),
+  Role VARCHAR(255),
+  Email VARCHAR(255),
+  Password VARCHAR(255)
+);
+
+
+CREATE TABLE Farmer (
+  Farmer_ID INT PRIMARY KEY,
+  Name VARCHAR(255),
+  Contact_Number VARCHAR(255),
+  Email VARCHAR(255),
+  Land_Details VARCHAR(255)
+);
+
+
+CREATE TABLE Crop (
+  Crop_ID INT PRIMARY KEY,
+  Crop_Name VARCHAR(255),
+  Cultivation_Method VARCHAR(255),
+  Soil_Type VARCHAR(255),
+  Climate VARCHAR(255)
+);
+
+
+CREATE TABLE Inventory (
+  Item_ID INT PRIMARY KEY,
+  Item_Name VARCHAR(255),
+  Quantity INT,
+  Expiry_Date DATE
+);
+
+
+CREATE TABLE Sales (
+  Sales_ID INT PRIMARY KEY,
+  Farmer_ID INT,
+  Item_ID INT,
+  Quantity INT,
+  Total_Amount DECIMAL(10, 2),
+  Date DATE,
+  FOREIGN KEY (Farmer_ID) REFERENCES Farmer(Farmer_ID),
+  FOREIGN KEY (Item_ID) REFERENCES Inventory(Item_ID)
+);
+
+
+
+
+
+
+
+
+===================================================================
+
+
+**Software Requirements Specification (SRS) for Employee Recruitment System**
+
+
+**1. Introduction**
+
+
+The Employee Recruitment System is a software application designed to streamline and automate the process of recruiting and hiring new employees. The system aims to provide an efficient and organized platform for managing job vacancies, receiving and evaluating applications, scheduling interviews, and making hiring decisions. This document outlines the functional and non-functional requirements of the system, providing a comprehensive description of its features and capabilities.
+
+
+**2. Functional Requirements**
+
+
+2.1. Job Vacancy Management
+- The system shall allow administrators to create and manage job vacancies, including specifying job titles, descriptions, required qualifications, and other relevant details.
+- Administrators shall be able to update and close job vacancies once they are filled or no longer available.
+- The system shall provide a user-friendly interface for applicants to view and apply for job vacancies.
+
+
+2.2. Application Management
+- Applicants shall be able to create accounts in the system and submit their applications for specific job vacancies.
+- The system shall capture and store applicant information, including personal details, contact information, work experience, education, and resume/CV.
+- Administrators shall have the ability to review and evaluate applications, shortlist candidates, and reject applicants.
+
+
+2.3. Interview Scheduling
+- The system shall facilitate the scheduling of interviews between administrators and shortlisted candidates.
+- Administrators shall be able to view candidate availability and schedule interviews based on mutually convenient time slots.
+- The system shall send automated notifications to candidates with interview details and reminders.
+
+
+2.4. Evaluation and Decision Making
+- Administrators shall have access to evaluation forms or scoring mechanisms to assess candidates during interviews or at various stages of the recruitment process.
+- The system shall allow administrators to record their evaluations and make hiring decisions based on predefined criteria.
+- Administrators shall be able to communicate hiring decisions to candidates through the system.
+
+
+2.5. Reporting
+- The system shall generate reports on various recruitment metrics, including the number of job vacancies, the number of applications received, the status of each application, and the overall recruitment progress.
+- Administrators shall be able to generate custom reports based on specified criteria, such as time period or job vacancy type.
+
+
+**3. Non-Functional Requirements**
+
+
+3.1. Usability
+- The system shall have an intuitive and user-friendly interface, making it easy for administrators and applicants to navigate and use its features.
+- Clear instructions and help resources shall be provided within the system to assist users in understanding its functionality.
+
+
+3.2. Performance
+- The system shall be capable of handling concurrent users and large volumes of data without significant performance degradation.
+- Response times for critical operations, such as application submission or interview scheduling, shall be within acceptable limits.
+
+
+3.3. Security
+- The system shall implement robust security measures to protect applicant and administrative data.
+- User authentication and authorization mechanisms shall be employed to ensure secure access to the system.
+- The system shall adhere to data privacy regulations and best practices.
+
+
+3.4. Reliability
+- The system shall be highly reliable, minimizing downtime and ensuring continuous access for users.
+- Data backups and disaster recovery mechanisms shall be in place to prevent data loss.
+
+
+3.5. Scalability
+- The system shall be designed to accommodate future growth and increasing user loads.
+- It should be capable of scaling horizontally by adding more servers or vertically by upgrading hardware resources.
+
+
+3.6. Compatibility
+- The system shall be compatible with commonly used web browsers and operating systems.
+- It should adhere to web standards and accessibility guidelines to ensure a consistent user experience.
+
+
+3.7. Maintenance and Support
+- The system shall be designed for ease of maintenance and future enhancements.
+- Proper documentation shall be provided to aid system administrators and support personnel.
+- Technical support shall be available to address user
+
+
+ queries and issues in a timely manner.
+
+
+**4. Entity Relationship Diagram**
+
+
+Based on the requirements described above, the following entity relationship diagram represents the key entities and their relationships in the Employee Recruitment System:
+
+
+```
+        +-------------------+
+        |      JobVacancy   |
+        +-------------------+
+        | VacancyID (PK)    |
+        | JobTitle          |
+        | Description       |
+        | Qualifications    |
+        | Status            |
+        +-------------------+
+                |
+                |
+                | 1
+                |
+                |
+        +-------------------+
+        |      Application   |
+        +-------------------+
+        | ApplicationID (PK)|
+        | VacancyID (FK)    |
+        | ApplicantName     |
+        | ContactInfo       |
+        | WorkExperience    |
+        | Education         |
+        | Resume/CV         |
+        | Status            |
+        +-------------------+
+                |
+                |
+                | 1
+                |
+                |
+        +-------------------+
+        |      Interview     |
+        +-------------------+
+        | InterviewID (PK)  |
+        | ApplicationID (FK)|
+        | InterviewDate     |
+        | InterviewTime     |
+        | Interviewer       |
+        | Notes             |
+        +-------------------+
+```
+
+
+In the diagram:
+- (PK) denotes the primary key of the entity.
+- (FK) denotes the foreign key referencing the primary key of another entity.
+
+
+The relationships between the entities are as follows:
+- Each "JobVacancy" can have multiple "Applications" (one-to-many relationship).
+- Each "Application" can have multiple "Interviews" (one-to-many relationship).
+
+
+**5. Pictorial Representation**
+
+
+Here's a pictorial representation connecting the tables based on the relationships:
+
+
+```
+    +-----------------+        +-----------------+        +-----------------+
+    |   JobVacancy    |        |   Application   |        |    Interview    |
+    +-----------------+        +-----------------+        +-----------------+
+    | VacancyID (PK)  |        | ApplicationID   |        | InterviewID (PK)|
+    | JobTitle        |        | VacancyID (FK)  |        | ApplicationID   |
+    | Description     |        | ApplicantName   |        | InterviewDate   |
+    | Qualifications  | 1    N | ContactInfo     | 1    N | InterviewTime   |
+    | Status          | ------ | WorkExperience  | ------ | Interviewer     |
+    +-----------------+        | Education       |        | Notes           |
+                              | Resume/CV       |        +-----------------+
+                              | Status          |
+                              +-----------------+
+```
+
+
+The diagram shows the relationships between the "JobVacancy," "Application," and "Interview" entities. Each relationship is labeled with the cardinality (1 to N) and the corresponding foreign key (FK). This pictorial representation provides a visual overview of how the tables are connected in the Employee Recruitment System.
+
+
+CREATE TABLE JobVacancy (
+  VacancyID INT PRIMARY KEY,
+  JobTitle VARCHAR(255),
+  Description VARCHAR(255),
+  Qualifications VARCHAR(255),
+  Status VARCHAR(255)
+);
+
+
+CREATE TABLE Application (
+  ApplicationID INT PRIMARY KEY,
+  VacancyID INT,
+  ApplicantName VARCHAR(255),
+  ContactInfo VARCHAR(255),
+  WorkExperience VARCHAR(255),
+  Education VARCHAR(255),
+  ResumeCV VARCHAR(255),
+  Status VARCHAR(255),
+  FOREIGN KEY (VacancyID) REFERENCES JobVacancy(VacancyID)
+);
+
+
+CREATE TABLE Interview (
+  InterviewID INT PRIMARY KEY,
+  ApplicationID INT,
+  InterviewDate DATE,
+  InterviewTime TIME,
+  Interviewer VARCHAR(255),
+  Notes VARCHAR(255),
+  FOREIGN KEY (ApplicationID) REFERENCES Application(ApplicationID)
+);
+
+
+
+
+
+
+==============================================================
+
+
+Software Requirements Specification (SRS) for an online ticket booking system and provide entity diagrams to illustrate the system's entities and their relationships. Let's start with the SRS.
+
+
+**Software Requirements Specification (SRS) for Online Ticket Booking System**
+
+
+1. **Introduction**
+   1. Purpose: The purpose of the online ticket booking system is to provide a convenient and efficient platform for users to book tickets for various events or services.
+   2. Scope: The system will allow users to browse available events, select seats, make payments, and receive e-tickets. It will also provide an administrative interface for managing events, venues, and user bookings.
+   3. Definitions, Acronyms, and Abbreviations: None
+
+
+2. **System Overview**
+   1. System Architecture: The system will be a web-based application built using a three-tier architecture (presentation layer, application layer, and data layer).
+   2. System Interfaces: The system will have interfaces for users, administrators, and external payment gateways.
+   3. User Characteristics: The system will cater to two types of users: regular users who book tickets and administrators who manage the system.
+   4. Constraints: The system should be responsive, secure, and scalable to handle a large number of concurrent users.
+
+
+3. **Functional Requirements**
+   1. User Registration and Login
+      - Users should be able to register an account with the system by providing their details.
+      - Users should be able to log in to their accounts using their credentials.
+   2. Event Management
+      - Administrators should be able to add, update, and delete events.
+      - Events should have attributes such as title, description, date, time, venue, and available seats.
+   3. Ticket Booking
+      - Users should be able to browse available events and view event details.
+      - Users should be able to select seats and specify the quantity of tickets.
+      - Users should be able to add tickets to their shopping cart.
+      - Users should be able to proceed to checkout and make payments.
+   4. Payment Processing
+      - The system should integrate with external payment gateways to process payments securely.
+      - Payment options should include credit/debit card, net banking, and mobile wallets.
+   5. Ticket Generation
+      - Once payment is successful, the system should generate e-tickets containing event details and a unique booking reference.
+      - E-tickets should be emailed to the user and stored in their account for future reference.
+   6. Booking Management
+      - Administrators should be able to view and manage user bookings.
+      - Administrators should be able to cancel or refund tickets if required.
+   7. Reporting and Analytics
+      - The system should provide reports and analytics on ticket sales, revenue, and popular events.
+
+
+4. **Non-Functional Requirements**
+   1. Usability: The system should have an intuitive user interface that is easy to navigate and understand.
+   2. Performance: The system should be responsive and handle concurrent user requests efficiently.
+   3. Security: The system should implement secure authentication, protect user data, and use encryption for sensitive information.
+   4. Reliability: The system should be available 24/7 with minimal downtime for maintenance.
+   5. Scalability: The system should be scalable to handle a growing number of users and events.
+   6. Compatibility: The system should be compatible with major web browsers and devices.
+   7. Maintainability: The system should be easy to maintain and support future enhancements.
+
+
+5. **System Models**
+   - Use Case Diagram: (Provide a use case diagram illustrating the interactions between users and the system
+
+
+)
+   - Class Diagram: (Provide a class diagram representing the classes/entities and their relationships)
+   - Sequence Diagram: (Provide a sequence diagram depicting the flow of interactions for a typical ticket booking process)
+
+
+Now, let's move on to creating the entity diagrams to illustrate the system's entities and their relationships.
+
+
+**Entity Diagrams**
+
+
+1. **Event**
+   - Attributes: eventID, title, description, date, time, venueID, availableSeats
+   - Relationships: One-to-many with Booking
+
+
+2. **Venue**
+   - Attributes: venueID, name, address
+   - Relationships: One-to-many with Event
+
+
+3. **User**
+   - Attributes: userID, name, email, password
+   - Relationships: One-to-many with Booking
+
+
+4. **Booking**
+   - Attributes: bookingID, userID, eventID, numTickets, bookingDate
+   - Relationships: Many-to-one with User and Event
+
+
+5. **Payment**
+   - Attributes: paymentID, bookingID, amount, paymentDate
+   - Relationships: One-to-one with Booking
+
+
+Note: The entity diagrams provide a visual representation of the entities and their relationships. Please note that the diagrams are simplified for illustration purposes, and additional attributes or relationships may be required depending on your specific system requirements.
+
+
+Unfortunately, as a text-based AI, I'm unable to provide you with a pictorial representation of connected tables. However, you can use the provided entity diagrams as a reference to create your own database schema, connecting the tables based on the relationships described.
+
+
+I hope this helps you create a comprehensive SRS and entity diagrams for your online ticket booking system! Let me know if you have any further questions.
+
+
+========================================================
+
+
+
+
+**Software Requirements Specification (SRS) for Online Project Management System**
+
+
+1. **Introduction**
+   1. Purpose: The purpose of the online project management system is to provide a collaborative platform for managing and tracking projects, tasks, resources, and timelines.
+   2. Scope: The system will allow users to create projects, assign tasks to team members, monitor progress, allocate resources, and generate reports. It will provide features for task management, document sharing, communication, and scheduling.
+   3. Definitions, Acronyms, and Abbreviations: None
+
+
+2. **System Overview**
+   1. System Architecture: The system will be a web-based application built using a three-tier architecture (presentation layer, application layer, and data layer).
+   2. System Interfaces: The system will have interfaces for project managers, team members, and administrators.
+   3. User Characteristics: The system will cater to project managers who create and manage projects, team members who work on tasks, and administrators who manage system settings and user roles.
+   4. Constraints: The system should be user-friendly, scalable, and support multiple concurrent users.
+
+
+3. **Functional Requirements**
+   1. User Registration and Login
+      - Users should be able to register an account with the system by providing their details.
+      - Users should be able to log in to their accounts using their credentials.
+   2. Project Management
+      - Project managers should be able to create new projects and define project details such as title, description, start date, end date, and priority.
+      - Project managers should be able to assign team members to projects.
+      - Project managers should be able to track project progress and update status.
+   3. Task Management
+      - Project managers should be able to create tasks within projects and assign them to team members.
+      - Team members should be able to view their assigned tasks and update their status.
+      - Task dependencies and priorities should be defined and managed.
+   4. Resource Allocation
+      - Project managers should be able to allocate resources (e.g., equipment, materials, or team members) to tasks.
+      - Resource availability and utilization should be tracked.
+   5. Document Sharing
+      - Users should be able to upload and share project-related documents and files.
+      - Version control and document access control should be implemented.
+   6. Communication
+      - Users should be able to communicate with team members through messages, comments, or discussion threads.
+      - Notifications and email alerts should be sent for important updates.
+   7. Scheduling and Calendar
+      - Users should be able to schedule project-related events, meetings, or milestones.
+      - A shared calendar should display important dates and deadlines.
+   8. Reporting and Analytics
+      - The system should provide reports on project status, task completion, resource utilization, and milestones achieved.
+
+
+4. **Non-Functional Requirements**
+   1. Usability: The system should have an intuitive user interface with easy navigation and clear instructions.
+   2. Performance: The system should be responsive and handle multiple concurrent users efficiently.
+   3. Security: The system should implement secure authentication, role-based access control, and data encryption.
+   4. Reliability: The system should be available 24/7 with minimal downtime for maintenance.
+   5. Scalability: The system should be scalable to handle a growing number of users, projects, and tasks.
+   6. Compatibility: The system should be compatible with major web browsers and devices.
+  
+
+
+
+
+**Entity-Relationship (ER) Diagram**
+
+
+```
+                 +----------------------+
+                 |         User         |
+                 +----------------------+
+                 | - userID (PK)        |
+                 | - name               |
+                 | - email              |
+                 | - password           |
+                 +----------------------+
+                           |
+                           |
+                           |
+                     +-----|-----+
+                     |   Project   |
+                     +-----|-----+
+                     | - projectID (PK)   |
+                     | - title            |
+                     | - description      |
+                     | - startDate        |
+                     | - endDate          |
+                     | - priority         |
+                     +-------------------+
+                           |
+                           |
+                           |
+                     +-----|-----+
+                     |    Task    |
+                     +-----|-----+
+                     | - taskID (PK)      |
+                     | - projectID (FK)   |
+                     | - title            |
+                     | - description      |
+                     | - status           |
+                     | - startDate        |
+                     | - endDate          |
+                     | - priority         |
+                     +-------------------+
+                           |
+                           |
+                           |
+                  +--------|---------+
+                  |   Resource    |
+                  +--------|---------+
+                  | - resourceID (PK)  |
+                  | - name             |
+                  +-------------------+
+                           |
+                           |
+                           |
+                  +--------|---------+
+                  | TaskAssignment |
+                  +--------|---------+
+                  | - taskID (FK)     |
+                  | - userID (FK)     |
+                  | - resourceID (FK) |
+                  +-------------------+
+```
+
+
+In the above diagram, the arrows indicate the relationships between the entities. The relationships are defined as follows:
+
+
+- One User can be assigned to multiple Tasks (Many-to-Many relationship through TaskAssignment)
+- One Task can be assigned to multiple Users (Many-to-Many relationship through TaskAssignment)
+- One User can create multiple Projects (One-to-Many relationship)
+- One Project can have multiple Tasks (One-to-Many relationship)
+- One Task can have multiple Resource Assignments (One-to-Many relationship)
+- One Resource can be assigned to multiple Tasks (One-to-Many relationship)
+
+
+Please note that the ER diagram provided is a simplified representation of the entities and relationships in an online project management system. Additional attributes or relationships may be required depending on your specific system requirements.
+
+
+I hope this description helps you visualize the connections between the entities in your online project management system.
+
+
+CREATE TABLE User (
+  userID INT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255)
+);
+
+
+CREATE TABLE Project (
+  projectID INT PRIMARY KEY,
+  title VARCHAR(255),
+  description VARCHAR(255),
+  startDate DATE,
+  endDate DATE,
+  priority VARCHAR(255)
+);
+
+
+CREATE TABLE Task (
+  taskID INT PRIMARY KEY,
+  projectID INT,
+  title VARCHAR(255),
+  description VARCHAR(255),
+  status VARCHAR(255),
+  startDate DATE,
+  endDate DATE,
+  priority VARCHAR(255),
+  FOREIGN KEY (projectID) REFERENCES Project(projectID)
+);
+
+
+CREATE TABLE Resource (
+  resourceID INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+
+
+CREATE TABLE TaskAssignment (
+  taskID INT,
+  userID INT,
+  resourceID INT,
+  FOREIGN KEY (taskID) REFERENCES Task(taskID),
+  FOREIGN KEY (userID) REFERENCES User(userID),
+  FOREIGN KEY (resourceID) REFERENCES Resource(resourceID)
+);
+
+
+
+
+
+
+=====================================================
