@@ -1,0 +1,357 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 50
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 233065db           |
+| aniket             |
+| aniket2            |
+| dbdemo             |
+| group10            |
+| iacsd_march23      |
+| information_schema |
+| mysql              |
+| performance_schema |
+| rohan              |
+| sakila             |
+| sys                |
+| test               |
+| test1              |
+| world              |
++--------------------+
+15 rows in set (0.00 sec)
+
+mysql> use 233065db;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE EMP
+    ->        (EMPNO INT(4) NOT NULL,
+    ->         ENAME varchar(10),
+    ->         JOB varchar(9),
+    ->         MGR INT(4),
+    ->         HIREDATE DATE,
+    ->         SAL DECIMAL(7, 2),
+    ->         COMM DECIMAL(7, 2),
+    ->         DEPTNO INT(2));
+Query OK, 0 rows affected, 3 warnings (0.24 sec)
+
+mysql>
+mysql> INSERT INTO EMP VALUES
+    ->         (7369, 'SMITH',  'CLERK',     7902,
+    ->         STR_TO_DATE('17-DEC-1980', '%d-%b-%Y'),  800, NULL, 20);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7499, 'ALLEN',  'SALESMAN',  7698,
+    ->         STR_TO_DATE('20-FEB-1981', '%d-%b-%Y'), 1600,  300, 30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7521, 'WARD',   'SALESMAN',  7698,
+    ->         STR_TO_DATE('22-FEB-1981', '%d-%b-%Y'), 1250,  500, 30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7566, 'JONES',  'MANAGER',   7839,
+    ->         STR_TO_DATE('2-APR-1981', '%d-%b-%Y'),  2975, NULL, 20);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7654, 'MARTIN', 'SALESMAN',  7698,
+    ->         STR_TO_DATE('28-SEP-1981', '%d-%b-%Y'), 1250, 1400, 30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7698, 'BLAKE',  'MANAGER',   7839,
+    ->         STR_TO_DATE('1-MAY-1981', '%d-%b-%Y'),  2850, NULL, 30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7782, 'CLARK',  'MANAGER',   7839,
+    ->         STR_TO_DATE('9-JUN-1981', '%d-%b-%Y'),  2450, NULL, 10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7788, 'SCOTT',  'ANALYST',   7566,
+    ->         STR_TO_DATE('09-DEC-1982', '%d-%b-%Y'), 3000, NULL, 20);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7839, 'KING',   'PRESIDENT', NULL,
+    ->         STR_TO_DATE('17-NOV-1981', '%d-%b-%Y'), 5000, NULL, 10);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7844, 'TURNER', 'SALESMAN',  7698,
+    ->         STR_TO_DATE('8-SEP-1981', '%d-%b-%Y'),  1500,    0, 30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7876, 'ADAMS',  'CLERK',     7788,
+    ->         STR_TO_DATE('12-JAN-1983', '%d-%b-%Y'), 1100, NULL, 20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7900, 'JAMES',  'CLERK',     7698,
+    ->         STR_TO_DATE('3-DEC-1981', '%d-%b-%Y'),   950, NULL, 30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7902, 'FORD',   'ANALYST',   7566,
+    ->         STR_TO_DATE('3-DEC-1981', '%d-%b-%Y'),  3000, NULL, 20);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP VALUES
+    ->         (7934, 'MILLER', 'CLERK',     7782,
+    ->         STR_TO_DATE('23-JAN-1982', '%d-%b-%Y'), 1300, NULL, 10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> CREATE TABLE DEPT
+    ->        (DEPTNO INT(2),
+    ->         DNAME varchar(14),
+    ->         LOC varchar(13) );
+Query OK, 0 rows affected, 1 warning (0.07 sec)
+
+mysql>
+mysql> INSERT INTO DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO DEPT VALUES (20, 'RESEARCH',   'DALLAS');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO DEPT VALUES (30, 'SALES',      'CHICAGO');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO DEPT VALUES (40, 'OPERATIONS', 'BOSTON');
+Query OK, 1 row affected (0.02 sec)
+
+mysql>
+mysql> CREATE TABLE BONUS
+    ->         (ENAME varchar(10),
+    ->          JOB   varchar(9),
+    ->          SAL   INT,
+    ->          COMM  INT);
+Query OK, 0 rows affected (0.10 sec)
+
+mysql>
+mysql> CREATE TABLE SALGRADE
+    ->         (GRADE INT,
+    ->          LOSAL INT,
+    ->          HISAL INT);
+Query OK, 0 rows affected (1.04 sec)
+
+mysql>
+mysql> INSERT INTO SALGRADE VALUES (1,  700, 1200);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO SALGRADE VALUES (2, 1201, 1400);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO SALGRADE VALUES (3, 1401, 2000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO SALGRADE VALUES (4, 2001, 3000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO SALGRADE VALUES (5, 3001, 9999);
+Query OK, 1 row affected (0.05 sec)
+
+mysql>
+mysql> CREATE TABLE DUMMY
+    ->         (DUMMY INT);
+Query OK, 0 rows affected (0.27 sec)
+
+mysql>
+mysql> INSERT INTO DUMMY VALUES (0);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_233065db |
++--------------------+
+| bonus              |
+| dept               |
+| dummy              |
+| emp                |
+| salgrade           |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+14 rows in set (0.00 sec)
+
+mysql> -- VIEW
+mysql> -- VIEW ARE VIRTUAL TABLE BASED ON BASE
+mysql> -- QUERY
+mysql>
+mysql> -- CREATE VIEW
+mysql>
+mysql> -- SYNTAX
+mysql> -- CREATE VIEW VIEW_NAME
+mysql> -- AS
+mysql> -- BASE QUERY;
+mysql>
+mysql> create view view1
+    -> as
+    -> select * from emp
+    -> where deptno=10;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> -- VIEW CREATED SUCCESSFULLY
+mysql>
+mysql> select * from view1;
++-------+--------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+--------+-----------+------+------------+---------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 | NULL |     10 |
++-------+--------+-----------+------+------------+---------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> -- CAN SHOW LIMITED NO OF COLUMNS TO THE OTHER USER
+mysql>
+mysql> -- CREATING VIEW CONSIST OF ONLY EMPNO,ENAME,JOB,DEPTNO
+mysql>
+mysql> create view view2
+    -> as
+    -> select empno,ename,job,deptno from emp;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from view2;
++-------+--------+-----------+--------+
+| empno | ename  | job       | deptno |
++-------+--------+-----------+--------+
+|  7369 | SMITH  | CLERK     |     20 |
+|  7499 | ALLEN  | SALESMAN  |     30 |
+|  7521 | WARD   | SALESMAN  |     30 |
+|  7566 | JONES  | MANAGER   |     20 |
+|  7654 | MARTIN | SALESMAN  |     30 |
+|  7698 | BLAKE  | MANAGER   |     30 |
+|  7782 | CLARK  | MANAGER   |     10 |
+|  7788 | SCOTT  | ANALYST   |     20 |
+|  7839 | KING   | PRESIDENT |     10 |
+|  7844 | TURNER | SALESMAN  |     30 |
+|  7876 | ADAMS  | CLERK     |     20 |
+|  7900 | JAMES  | CLERK     |     30 |
+|  7902 | FORD   | ANALYST   |     20 |
+|  7934 | MILLER | CLERK     |     10 |
++-------+--------+-----------+--------+
+14 rows in set (0.00 sec)
+
+mysql> -- SIMPLE VIEW = WE CAN PERFORM DML OPERATIONS
+mysql> -- COMPLEX VIEW = WE CANNOT PERFORM DML OPERATIONS
+mysql>
+mysql> -- COMPLEX VIEW -> CONSIST OF AGGREGATION OPERATION
+mysql>
+mysql> -- CREATING COMPLEX VIEW
+mysql>
+mysql> create view complexView
+    -> as
+    -> select count(*)as 'Total Count',
+    -> min(sal)as 'Min sal',
+    -> max(sal)as 'Max sal'
+    -> from emp;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from complexView;
++-------------+---------+---------+
+| Total Count | Min sal | Max sal |
++-------------+---------+---------+
+|          14 |  800.00 | 5000.00 |
++-------------+---------+---------+
+1 row in set (0.00 sec)
+
+mysql> -- NOW WE WILL DROP ALL VIEWS CREATED!!!
+mysql> -- SYNTAX :
+mysql> -- DROP VIEW VIEWNAME;
+mysql>
+mysql> drop view view1;
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_233065db |
++--------------------+
+| bonus              |
+| complexview        |
+| dept               |
+| dummy              |
+| emp                |
+| salgrade           |
+| view2              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> /*views in MySQL do occupy space, but the amount of space they consume is typically
+   /*> negligible compared to the data stored in the underlying tables.
+   /*>
+   /*> A view is a virtual table that is generated based on a predefined query.
+   /*> It does not physically store any data itself; instead, it retrieves and presents
+   /*> data from the underlying tables whenever the view is queried. The storage required
+   /*> by a view is primarily metadata, which includes the definition of the view and
+   /*> any associated permissions.
+   /*>
+   /*> The size of the metadata associated with a view is typically very small and does
+   /*> not significantly impact the overall database size. The actual data storage and
+   /*> space consumption in a MySQL database is determined by the underlying tables and
+   /*> indexes.
+   /*>
+   /*> It's worth noting that if a view involves complex operations or joins, it may
+   /*> require additional computational resources when queried, but this does not
+   /*> directly affect the storage space.
+   /*>
+   /*> */
+mysql>
+mysql> drop view view2;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop view complexView;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_233065db |
++--------------------+
+| bonus              |
+| dept               |
+| dummy              |
+| emp                |
+| salgrade           |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql>exit;
