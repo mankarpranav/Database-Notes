@@ -1,0 +1,367 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 49
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 233065db           |
+| aniket             |
+| aniket2            |
+| dbdemo             |
+| group10            |
+| iacsd_march23      |
+| information_schema |
+| mysql              |
+| performance_schema |
+| rohan              |
+| sakila             |
+| sys                |
+| test               |
+| test1              |
+| world              |
++--------------------+
+15 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> #Procedure Syntax ->
+mysql>
+mysql> #Create procedure <name of procedure>(parameters)
+mysql> #Begin
+mysql> #Select * from emp;
+mysql> #End//
+mysql>
+mysql> delimiter //
+mysql> create procedure myproc()
+    -> begin
+    -> select * from emp;
+    -> end//
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> call myproc;
++-------+---------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME   | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+---------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH   | CLERK     | 7902 | 1980-12-17 | 3000.00 |    NULL |     20 |
+|  7499 | ALLEN   | SALESMAN  | 7698 | 1981-02-20 | 1728.00 |  300.00 |     30 |
+|  7521 | WARD    | SALESMAN  | 7698 | 1981-02-22 | 1350.00 |  500.00 |     30 |
+|  7566 | JONES   | MANAGER   | 7839 | 1981-04-02 | 3272.50 |    NULL |     20 |
+|  7654 | MARTIN  | SALESMAN  | 7698 | 1981-09-28 | 1350.00 | 1400.00 |     30 |
+|  7698 | BLAKE   | MANAGER   | 7839 | 1981-05-01 | 3135.00 |    NULL |     30 |
+|  7782 | CLARK   | MANAGER   | 7839 | 1981-06-09 | 2695.00 |    NULL |     10 |
+|  7788 | SCOTT   | ANALYST   | 7566 | 1982-12-09 | 3600.00 |    NULL |     20 |
+|  7839 | KING    | PRESIDENT | NULL | 1981-11-17 | 5400.00 |    NULL |     10 |
+|  7844 | TURNER  | SALESMAN  | 7698 | 1981-09-08 | 1620.00 |    0.00 |     30 |
+|  7876 | ADAMS   | CLERK     | 7788 | 1983-01-12 | 1375.00 |    NULL |     20 |
+|  7900 | JAMES   | CLERK     | 7698 | 1981-12-03 | 1187.50 |    NULL |     30 |
+|  7902 | FORD    | ANALYST   | 7566 | 1981-12-03 | 3600.00 |    NULL |     20 |
+|  7934 | MILLER  | CLERK     | 7782 | 1982-01-23 | 1625.00 |    NULL |     10 |
+|  7955 | SHARAYU | CLERK     | 7566 | 1999-09-09 |  250.00 |  100.00 |   NULL |
+|  7777 | ANUJA   | CRM       | 7566 | 1998-03-21 | 4000.00 |  700.00 |     40 |
+|  7888 | ALEX    | ADMIN     | NULL | NULL       | 3400.00 |    NULL |   NULL |
++-------+---------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter //
+mysql> create procedure insertNewRecord(
+    -> pempno int,pename varchar(20),
+    -> pjob varchar(20),psal double(9,2)
+    -> )
+    -> begin
+    -> insert into emp(empno,ename,job,sal)
+    -> values(pempno,pename,pjob,psal);
+    -> end//
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> delimiter ;
+mysql> call insertNewRecord(7888,'BELL','ANALYST',2300);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from emp;
++-------+---------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME   | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+---------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH   | CLERK     | 7902 | 1980-12-17 | 3000.00 |    NULL |     20 |
+|  7499 | ALLEN   | SALESMAN  | 7698 | 1981-02-20 | 1728.00 |  300.00 |     30 |
+|  7521 | WARD    | SALESMAN  | 7698 | 1981-02-22 | 1350.00 |  500.00 |     30 |
+|  7566 | JONES   | MANAGER   | 7839 | 1981-04-02 | 3272.50 |    NULL |     20 |
+|  7654 | MARTIN  | SALESMAN  | 7698 | 1981-09-28 | 1350.00 | 1400.00 |     30 |
+|  7698 | BLAKE   | MANAGER   | 7839 | 1981-05-01 | 3135.00 |    NULL |     30 |
+|  7782 | CLARK   | MANAGER   | 7839 | 1981-06-09 | 2695.00 |    NULL |     10 |
+|  7788 | SCOTT   | ANALYST   | 7566 | 1982-12-09 | 3600.00 |    NULL |     20 |
+|  7839 | KING    | PRESIDENT | NULL | 1981-11-17 | 5400.00 |    NULL |     10 |
+|  7844 | TURNER  | SALESMAN  | 7698 | 1981-09-08 | 1620.00 |    0.00 |     30 |
+|  7876 | ADAMS   | CLERK     | 7788 | 1983-01-12 | 1375.00 |    NULL |     20 |
+|  7900 | JAMES   | CLERK     | 7698 | 1981-12-03 | 1187.50 |    NULL |     30 |
+|  7902 | FORD    | ANALYST   | 7566 | 1981-12-03 | 3600.00 |    NULL |     20 |
+|  7934 | MILLER  | CLERK     | 7782 | 1982-01-23 | 1625.00 |    NULL |     10 |
+|  7955 | SHARAYU | CLERK     | 7566 | 1999-09-09 |  250.00 |  100.00 |   NULL |
+|  7777 | ANUJA   | CRM       | 7566 | 1998-03-21 | 4000.00 |  700.00 |     40 |
+|  7888 | ALEX    | ADMIN     | NULL | NULL       | 3400.00 |    NULL |   NULL |
+|  7888 | BELL    | ANALYST   | NULL | NULL       | 2300.00 |    NULL |   NULL |
++-------+---------+-----------+------+------------+---------+---------+--------+
+18 rows in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure countEmp(pdept int)
+    -> begin
+    -> select count(*) from emp where deptno=pdept;
+    -> end //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call countEmp(20);
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure countMinsal(in pdept int, out pcount int,
+    -> out pminsal double)
+    -> begin
+    -> select count(*), min(sal) into pcount,pminsal
+    -> from emp
+    -> where deptno=pdept;
+    -> end //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> call countMinsal(30,@count,@minsal);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @count,@minsal;
++--------+---------+
+| @count | @minsal |
++--------+---------+
+|      6 |  1187.5 |
++--------+---------+
+1 row in set (0.00 sec)
+
+mysql> -- increase count by 10
+
+mysql> delimiter //
+mysql> create procedure incCount(inout num int)
+    -> begin
+    -> set num=num+10;
+    -> end//
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql>
+mysql> set @num = 10;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call incCount(@num);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @num;
++------+
+| @num |
++------+
+|   20 |
++------+
+1 row in set (0.00 sec)
+
+
+mysql> -- display emp having sal > given sal
+mysql>
+mysql> delimiter //
+mysql> create procedure data(in psal double)
+    -> begin
+    -> select * from emp where
+    -> sal > psal;
+    -> end //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> call data(1200);
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 | 3000.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1728.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1350.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 3272.50 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1350.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 3135.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2695.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3600.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5400.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1620.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1375.00 |    NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3600.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1625.00 |    NULL |     10 |
+|  7777 | ANUJA  | CRM       | 7566 | 1998-03-21 | 4000.00 |  700.00 |     40 |
+|  7888 | ALEX   | ADMIN     | NULL | NULL       | 3400.00 |    NULL |   NULL |
+|  7888 | BELL   | ANALYST   | NULL | NULL       | 2300.00 |    NULL |   NULL |
++-------+--------+-----------+------+------------+---------+---------+--------+
+16 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> -- display emp of given dept and sal > given sal
+
+mysql> delimiter //
+mysql> create procedure getDetails(in pdept int,in psal double(9,2))
+    -> begin
+    -> select * from emp where
+    -> deptno=pdept and sal>psal;
+    -> end//
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> delimiter ;
+mysql> call getDetails(10,2000);
++-------+-------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+-----------+------+------------+---------+------+--------+
+|  7782 | CLARK | MANAGER   | 7839 | 1981-06-09 | 2695.00 | NULL |     10 |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5400.00 | NULL |     10 |
++-------+-------+-----------+------+------------+---------+------+--------+
+2 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> /*
+   /*> write a procedure to assign remark based on comm
+   /*> If comm is null or =0 then ‘need improvement’
+   /*> Else if comm<300 then ‘ok’
+   /*> Else if comm>=300 and comm <500 then ‘good’
+   /*> Otherwise ‘excellent’
+   /*> */
+mysql>
+
+mysql> delimiter //
+mysql> create procedure assgnRemark(in pcomm double,out remark varchar(20))
+    -> begin
+    -> if pcomm is null or pcomm = 0 then
+    -> set remark = 'need improvement';
+    -> elseif pcomm< 300 then
+    -> set remark = 'Ok';
+    -> elseif pcomm>= 300 and pcomm<500 then
+    -> set remark = 'Good';
+    -> else
+    -> set remark = 'Excellent';
+    -> end if;
+    ->
+    -> end//
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter ;
+mysql> call assgnRemark(100,@remark);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @remark;
++---------+
+| @remark |
++---------+
+| Ok      |
++---------+
+1 row in set (0.00 sec)
+
+mysql> /*write a procedure to find net Sal of employee by using formula sal+comm for given empno
+   /*> If netsal <1000 then "less"
+   /*> Else netsal>=1000 and <2000 ‘ok’
+   /*> Else netsal >=2000 and <3000 ‘good’
+   /*> Else "better"
+   /*> */
+mysql>
+
+mysql> delimiter //
+mysql> create procedure getSal(in pempno int,out netsal double(9,2))
+    -> begin
+    -> declare remark varchar(20);
+    -> declare psal double(9,2);
+    ->
+    -> select sal+ifnull(comm,0) into psal
+    -> from emp where empno=pempno;
+    ->
+    -> if psal < 1000 then
+    ->  set remark='less';
+    -> elseif psal >=1000 and psal < 2000 then
+    ->  set remark='ok';
+    -> elseif psal >=2000 and psal < 3000 then
+    ->  set remark='good';
+    -> else set remark = 'better';
+    -> end if;
+    -> select remark;
+    -> end //
+Query OK, 0 rows affected, 2 warnings (0.04 sec)
+
+mysql> delimiter ;
+mysql> call getSal(7777,@netSal);
++--------+
+| remark |
++--------+
+| better |
++--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> /*Write a procedure getdiscount to find discount % and
+   /*> discounted amount from product table for a
+   /*> particular product.
+   /*> If price <20 3%
+   /*> Else >=20 <40 7%
+   /*> Else discount 10%
+   /*>
+   /*> */
+mysql>
+
+mysql> delimiter  //
+mysql> create procedure getdiscount2(
+    -> in prodId int,
+    -> out discountPer double(9,2),
+    -> out discountedAmt double(9,2))
+    -> begin
+    -> declare vprice double(9,2);
+    ->
+    -> select price into vprice from product
+    -> where pid=prodId ;
+    ->
+    -> if vprice<20
+    -> then set discountPer=0.03;
+    -> elseif vprice>=20 and vprice<40
+    -> then set discountPer=0.07;
+    -> else
+    -> set discountPer=0.10;
+    -> end if;
+    ->
+    -> set discountedAmt = vprice * discountPer;
+    -> end //
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> delimiter ;
+mysql> call getdiscount2(2,@discount,@dis_Amount);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @discount,@dis_Amount;
++-----------+-------------+
+| @discount | @dis_Amount |
++-----------+-------------+
+|       0.1 |        16.5 |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> -- Done with Day-8 and Day-9 Practice
+mysql> -- !!!!!
+mysql> exit;
