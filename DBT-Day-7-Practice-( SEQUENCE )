@@ -1,0 +1,80 @@
+mysql> /*
+   /*>
+   /*> SEQUENCE -> ORACLE
+   /*>
+   /*> In MySQL, a sequence is a database object used to generate unique numeric values automatically. 
+   It provides a sequential series of numbers that can be used as primary keys or other unique identifiers in tables. 
+   However, it's important to note that as of my knowledge cutoff in September 2021, MySQL does not have built-in support 
+   for sequences. Nevertheless, there are alternative approaches that can achieve similar functionality. Let's explore them:
+   /*>
+   /*> 1. AUTO_INCREMENT Column: One common method is to use the AUTO_INCREMENT attribute on an integer column in a table. 
+   By defining this attribute on a column, MySQL automatically generates a unique value for that column whenever a new row 
+   is inserted into the table. The sequence starts from 1 by default and increments by 1 for each new row.
+   /*>
+   /*>    Example:
+   /*>    ```
+   /*>    CREATE TABLE my_table (
+   /*>      id INT AUTO_INCREMENT PRIMARY KEY,
+   /*>      ...
+   /*>    );
+   /*>    ```
+   /*>
+   /*> 2. Triggers: Another approach is to use triggers, which are database objects that can be associated with a table 
+   and automatically execute certain actions when specific events occur (e.g., before or after an INSERT operation). By 
+   creating a trigger, you can manually generate and assign unique values to a specific column in a table.
+   /*>
+   /*>    Example:
+   /*>    ```sql
+   /*>    CREATE TRIGGER my_trigger
+   /*>    BEFORE INSERT ON my_table
+   /*>    FOR EACH ROW
+   /*>    BEGIN
+   /*>      SET NEW.id = (SELECT MAX(id) + 1 FROM my_table);
+   /*>    END;
+   /*>    ```
+   /*>
+   /*>    Note that this trigger example assigns the next available value by incrementing the maximum existing value by 1.
+   However, this method may encounter issues in a multi-user environment where simultaneous inserts can lead to duplicate 
+   values or conflicts.
+   /*>
+   /*> 3. Custom Implementation: If you require more control or flexibility, you can create your own custom implementation 
+   of a sequence using tables and transactions. You would create a separate table to store the current sequence value and 
+   use transactions to ensure atomicity and prevent conflicts when generating new values.
+   /*>
+   /*>    Example:
+   /*>    ```sql
+   /*>    CREATE TABLE my_sequence (
+   /*>      value INT
+   /*>    );
+   /*>
+   /*>    -- Insert initial value
+   /*>    INSERT INTO my_sequence (value) VALUES (0);
+   /*>
+   /*>    -- Retrieve and increment value in a transaction
+   /*>    START TRANSACTION;
+   /*>    SELECT value FROM my_sequence FOR UPDATE;
+   /*>    UPDATE my_sequence SET value = value + 1;
+   /*>    COMMIT;
+   /*>    ```
+   /*>
+   /*>    This approach allows you to have more control over the sequence generation process and handle complex scenarios. 
+   However, it requires additional manual management and potential overhead.
+   /*>
+   /*> Remember that these alternatives aim to simulate sequence-like behavior in MySQL, as the database does not have a 
+   native sequence object. Depending on your specific use case and requirements, one of these methods may be suitable for 
+   your needs.
+   /*>
+   /*> SYNTAX:
+   /*>
+   /*> CREATE SEQUENCE name_of_sequence
+   /*> INCREMENT BY number
+   /*> START WITH DIFFERENCE_BETWEEN_NUMBERS
+   /*> MAXVALUE LIMIT_VALUE
+   /*> CYCLE    NOCYCLE
+   /*> CACHE    NOCACHE;
+   /*>
+   /*> LAST TWO LINES ARE OPTIONAL.
+   /*>
+   /*> */
+mysql>
+
