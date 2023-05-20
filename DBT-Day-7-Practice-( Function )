@@ -1,0 +1,141 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 25
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+mysql> /*
+   /*>
+   /*> To see the list of all functions
+   /*>
+   /*> SELECT ROUTINE_DEFINITION
+   /*> FROM information_schema.ROUTINES WHERE
+   /*> SPECIFIC_NAME='procedurename'
+   /*>
+   /*>
+   /*> SHOW FUNCTION STATUS WHERE Db = 'db_name';
+   /*>
+   /*> SHOW procedure STATUS WHERE Db = 'db_name';
+   /*>
+   /*>
+   /*> Difference between functions and procedure
+   /*>
+   /*> Procedure
+   /*>
+   /*> 1.it doesnot return any it returns a single value
+   /*> value
+   /*> 2. use call statement to call
+   /*> a procedure, you cannot use it in select statement
+   /*> we can call functions in select statement
+   /*>
+   /*> ----------------------------------------------
+   /*>
+   /*> to allow create functions
+   /*> SET GLOBAL log_bin_trust_function_creators = 1;
+   /*>
+   /*> Function
+   /*>
+   /*> When you want to return one value as output then write functions
+   /*>
+   /*> ----------------------------------------------
+   /*> */
+mysql>
+mysql> use test;
+Database changed
+mysql>
+mysql>
+mysql> #1. Write a function to generate email
+mysql>
+mysql> delimiter //
+mysql> create function getEmail(name varchar(20),job varchar(20))returns varchar(20)
+    -> begin
+    -> declare email varchar(20);
+    -> set email = concat(substr(name,1,3),'.',substr(job,1,3),'@gmail.com');
+    -> return email;
+    -> end//
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> select getEmail('Pranav','Developer');
++--------------------------------+
+| getEmail('Pranav','Developer') |
++--------------------------------+
+| Pra.Dev@gmail.com              |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> #----------------------------------------------------
+mysql>
+mysql> # 2. Write a function to find experience.
+mysql>
+mysql> delimiter //
+mysql> create function get_exp(hdate date) returns int
+    -> begin
+    -> declare exp int;
+    -> set exp=floor(datediff(curdate(),hdate)/365);
+    -> return exp;
+    -> end//
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select get_exp('2000-02-02');
+    -> //
++-----------------------+
+| get_exp('2000-02-02') |
++-----------------------+
+|                    23 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> delimiter ;
+mysql> #----------------------------------------------------
+mysql> /*
+   /*> 3. Write a function which accepts price and qty as i/p and returns discounted
+   /*> price.
+   /*> If qty < 20 then apply 10% discount on price
+   /*> Else if qty >= 20 and <=30 discount 20%
+   /*> Otherwise 30% discount
+   /*> */
+mysql>
+mysql> Delimiter //
+mysql>
+mysql> Create function get_discount(pr double(9,2), qty int) returns double(9,2)
+    -> Begin
+    -> Declare dis_price double(9,2) default 0;
+    -> If qty!=0 then
+    -> If qty<20 then
+    -> Set dis_price=0.9*pr;
+    -> Elseif qty<30 then
+    -> Set dis_price=0.8*pr;
+    -> Else
+    -> Set dis_price=0.7*pr;
+    -> End if;
+    -> End if;
+    ->
+    -> Return dis_price;
+    -> End//
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql>
+mysql> delimiter ;
+mysql>
+mysql> select get_discount(100,45);
++----------------------+
+| get_discount(100,45) |
++----------------------+
+|                70.00 |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> exit;
+
+
+
