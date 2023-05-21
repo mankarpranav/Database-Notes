@@ -1,0 +1,263 @@
+
+//Practice when...then in sql
+
+select empno,ename,sal,comm,case
+when comm>=600 
+	then 'excellent Keep it up'
+when comm<600 or comm is not null 
+	then 'Good'
+else
+	'Need Improvement'
+end remark
+from emp;
+
+---------------------------------------------------
+
+select empno,ename,deptno,case
+deptno 
+when 10 then 'Hr'
+when 20 then 'Admin'
+when 30 then 'Accounts'
+else 'Purchase'
+end "Dept Name"
+from emp order by deptno;
+
+
+select pid,pname,qty,case
+when qty<20 
+	then 'less'  
+when qty>=20 and qty<35 
+	then 'moderate'
+when qty>=35 and qty<100
+	then 'good qty'
+else 
+	'excess'
+end remark
+from product;
+
+---------------------------------------------------
+
+//Joins -> (inner,right,left)
+
+
+1.To find sid,name,marks and duration of all 
+the courses.
+
+select s.sid,s.sname,c.duration,m.marks
+from student s,course c,marks m 
+where s.sid=m.sid and c.cname=m.course;
+
+--------------------------------------
+
+2.To find the marks and duration of all 
+courses for which Rajan appeared.
+
+select sname,duration,marks,course 
+from student s,course c, marks m 
+where sname='rajan' and s.sid=m.sid and 
+c.cname=m.course;
+
+----------------------------------------
+
+3.To display empno,name,sal,deptno,grade 
+and dname for all employees.
+
+select e.empno,e.ename,e.sal,e.deptno,s.grade,
+d.dname
+from emp e,salgrade s,dept d
+where
+e.deptno=d.deptno and 
+e.sal between losal and hisal;
+
+--------------------------------------------
+
+4.To display empno,name,sal,deptno,grade 
+and dname for all employees who are working in
+either sales department or purchase dept
+
+
+select e.empno,e.ename,e.sal,d.deptno,
+s.grade,d.dname
+from emp e,salgrade s,dept d
+where 
+e.deptno=d.deptno and
+e.sal between losal and hisal and
+d.dname in("purchase","sales");
+
+-----------------------------------------------
+
+5.To display empno,name,sal,deptno,grade 
+and dname for all employees who are working in
+either sales department or Accounting dept 
+and sal >2000
+
+ 
+select e.empno,e.ename,e.sal,
+d.deptno,s.grade,d.dname
+from emp e,salgrade s,dept d
+where 
+e.deptno=d.deptno and
+e.sal between hisal and losal and
+d.dname in ('sales','accounting') and
+e.sal > 2000;
+
+-----------------------------------------------
+
+5. To find empno,ename,sal,mgrno 
+manager name,manager sal
+
+
+select e.empno,e.ename,e.sal,e.mgr,
+m.ename as "Manager Name",m.sal as 
+"Manager Salary" 
+from emp e, emp m
+where e.mgr=m.empno;
+
+-----------------------------------------------
+
+6. Display empno,ename,sal,dname for 
+all employees.
+
+select e.empno,e.ename,e.sal,d.deptno,d.dname
+from emp e,dept d
+where e.deptno=d.deptno;
+
+-----------------------------------------------
+
+7.Display empno,ename,sal,dname for all 
+employees, and also display departments 
+in which no employees are there.
+
+select e.empno,e.ename,e.sal,d.dname 
+from emp e right join dept d
+on
+e.deptno=d.deptno;
+
+-------------------------------------------------
+
+2. Display empno,ename,sal,dname for all employees, 
+and also display employees for whom
+no department is assigned.
+
+select e.empno,e.ename,e.sal,d.dname 
+from emp e left join dept d
+on e.deptno=d.deptno;
+
+-------------------------------------------------
+
+3. Display empno,ename,sal,dname for all employees, 
+and also display employees for whom
+no department is assigned. And also 
+display dept in which no employees are there.
+
+select e.empno,e.ename,e.sal,d.dname from 
+emp e right join dept d
+on e.deptno = d.deptno
+union
+select e.empno,e.ename,e.sal,d.dname from 
+emp e left join dept d
+on e.deptno=d.deptno;
+
+-------------------------------------------------
+
+Q.Display cname,fname,rname which are assigned to 
+courses also display faculties who are not assigned
+to courses also display rooms which are not assigned
+to the courses.
+
+
+select cname,fname,rname
+From faculty f left join course c on c.fid=f.fid 
+left join room r on c.rid=r.rid
+union
+Select cname,null,rname
+From course c right join room r on c.rid=r.rid
+Where c.cname is null;
+
+-------------------------------------------------
+
+
+Q.Display cname,fname which are assigned to courses 
+also display faculties who
+are not assigned to courses 
+also display courses 
+for which no faculties are
+assigned.
+
+
+select cname,fname 
+from faculty f right join course c on f.fid=c.fid
+union
+select cname, fname
+from course c right join faculty f on c.fid=f.fid;
+
+-------------------------------------------------
+
+Q. Display all courses and rooms which are assigned
+to courses and also display rooms which are 
+available.
+
+select c.courseid,c.cname,r.rid,r.rname from course c
+left join room r
+on r.rid=c.rid
+
+union
+
+select c.courseid,c.cname,r.rid,r.rname from course c
+right join room r
+on r.rid=c.rid; 
+ 
+-------------------------------------------------
+
+Q. Display all cname and faculties allocated 
+to the course, also display faculties
+who are not assigned to any course.
+
+select c.cname,f.fid,f.fname
+from course c left join faculty f
+on c.fid=f.fid
+union
+select c.cname,f.fid,f.fname
+from course c right join faculty f
+on c.fid=f.fid;
+
+-------------------------------------------------
+
+Q. Display course name and 
+faculty name allocated to the course
+
+select c.cname,f.fname 
+from course c inner join faculty f
+on c.fid=f.fid;
+
+-------------------------------------------------
+
+Q. Display all coursename and rname 
+allocated to course 
+
+select c.cname,r.rname
+from course c inner join room r
+on c.rid=r.rid;
+
+--------------------------------------------------
+
+Q. Display courseid, course name, rname,faculty 
+name.
+
+//using joins->
+
+Select
+c.courseid,c.cname,r.rname,f.fname
+From course c inner join room r on
+c.rid=r.rid inner join faculty f on
+c.fid=f.fid
+
+//using where->(does same selective)
+
+select courseid,cname,rname,fname
+from course c,faculty f,room r where
+c.rid=r.rid and 
+f.fid=c.fid;
+
+--------------------------------------------------
+
