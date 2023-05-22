@@ -1,0 +1,477 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 57
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 233065db           |
+| aniket             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use 233065db;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_233065db  |
++---------------------+
+| bonus               |
+| dept                |
+| dont_delete_this_db |
+| dummy               |
+| emp                 |
+| salgrade            |
++---------------------+
+6 rows in set (0.00 sec)
+
+mysql> create table Employee (
+    -> empid int primary key,
+    -> empname varchar(30),
+    -> Department varchar(30),
+    -> Contactno bigint,
+    -> emailid varchar(30),
+    -> emphead int
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table EmpDept(
+    -> DeptId varchar(30) primary key,
+    -> Deptname varchar(30),
+    -> Dept_off varchar(30),
+    -> Depthead int,
+    -> constraint foreign key fkid(Depthead) references
+    -> Employee(empid)
+    -> );
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> create table EmpSalary(
+    -> EmpId int,
+    -> Salary double(9,2),
+    -> IsPermanent int,
+    -> constraint foreign key fkid2(EmpId) references
+    -> Employee(empid)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.39 sec)
+
+mysql> create table Project (
+    -> projectid varchar(20) primary key,
+    -> duration int
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql>
+mysql>
+mysql> create table country(
+    -> cid varchar(30) primary key,
+    -> cname varchar(30)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+mysql>
+mysql> create table clienttable(
+    -> clientid varchar(30) primary key,
+    -> clientname varchar(30),
+    -> cid varchar(30) references country(cid)
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> create table empproject (
+    -> empid int ,
+    -> projectid varchar(30) ,
+    -> clientid varchar(30) ,
+    -> startyear int,
+    -> endyear int,
+    -> constraint foreign key fkid3(empid) references employee(empid),
+    -> constraint foreign key fkid4(projectid) references project(projectid),
+    -> constraint foreign key fkid5(clientid) references clienttable(clientid)
+    -> );
+Query OK, 0 rows affected (0.13 sec)
+
+mysql>
+mysql> INSERT INTO Employee (Empid, EmpName, Department, ContactNo, EmailId, Emphead) VALUES
+    -> (101, 'Isha', 'E-101', 1234567890, 'isha@gmail.com', 105),
+    -> (102, 'Priya', 'E-104', 1234567890, 'priya@yahoo.com', 103),
+    -> (103, 'Neha', 'E-101', 1234567890, 'neha@gmail.com', 101),
+    -> (104, 'Rahul', 'E-102', 1234567890, 'rahul@yahoo.com', 105),
+    -> (105, 'Abhishek', 'E-101', 1234567890, 'abhishek@gmail.com', 102);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql> INSERT INTO EmpDept (DeptId, DeptName, Dept_off, DeptHead) VALUES
+    -> ('E-101', 'HR', 'Monday', 105),
+    -> ('E-102', 'Development', 'Tuesday', 101),
+    -> ('E-103', 'House Keeping', 'Saturday', 103),
+    -> ('E-104', 'Sales', 'Sunday', 104),
+    -> ('E-105', 'Purchase', 'Tuesday', 104);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO EmpSalary (EmpId, Salary, IsPermanent) VALUES
+    -> (101, 2000, 'Yes'),
+    -> (102, 10000, 'Yes'),
+    -> (103, 5000, 'No'),
+    -> (104, 1900, 'Yes'),
+    -> (105, 2300, 'Yes');
+ERROR 1366 (HY000): Incorrect integer value: 'Yes' for column 'IsPermanent' at row 1
+mysql>
+mysql>
+mysql> INSERT INTO Project (ProjectId, Duration) VALUES
+    -> ('p-1', 23),
+    -> ('p-2', 15),
+    -> ('p-3', 45),
+    -> ('p-4', 2),
+    -> ('p-5', 30);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO Country (cid, cname) VALUES
+    -> ('c-1', 'India'),
+    -> ('c-2', 'USA'),
+    -> ('c-3', 'China'),
+    -> ('c-4', 'Pakistan'),
+    -> ('c-5', 'Russia');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO ClientTable (ClientId, ClientName, cid) VALUES
+    -> ('cl-1', 'ABC Group', 'c-1'),
+    -> ('cl-2', 'PQR', 'c-1'),
+    -> ('cl-3', 'XYZ', 'c-2'),
+    -> ('cl-4', 'tech altum', 'c-3'),
+    -> ('cl-5', 'mnp', 'c-5');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO EmpProject (EmpId, ProjectId, ClientID, StartYear, EndYear) VALUES
+    -> (101, 'p-1', 'Cl-1', 2010, 2010),
+    -> (102, 'p-2', 'Cl-2', 2010, 2012),
+    -> (103, 'p-1', 'Cl-3', 2013, NULL),
+    -> (104, 'p-4', 'Cl-1', 2014, 2015),
+    -> (105, 'p-4', 'Cl-5', 2015, NULL);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- NESTED QUERIES
+mysql>
+mysql> /*
+   /*> 1.Select the department name of the company which is
+   /*> assigned to the
+   /*> employee whose employee id is grater 103.
+   /*>
+   /*> */
+mysql>
+mysql> # -----------------------------------------------------
+mysql>
+mysql> /*
+   /*> 2.Select the name of the employee who is
+   /*> working under Abhishek.
+   /*>
+   /*> */
+mysql>
+mysql> select * from employee where emphead = (select empid
+    -> from employee where empname='abhishek');
++-------+---------+------------+------------+-----------------+---------+
+| empid | empname | Department | Contactno  | emailid         | emphead |
++-------+---------+------------+------------+-----------------+---------+
+|   101 | Isha    | E-101      | 1234567890 | isha@gmail.com  |     105 |
+|   104 | Rahul   | E-102      | 1234567890 | rahul@yahoo.com |     105 |
++-------+---------+------------+------------+-----------------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql> /*
+   /*>
+   /*> 3.Select the name of the employee who is
+   /*> department head of HR.
+   /*>
+   /*> */
+mysql>
+mysql> select empname from employee where empid =
+    -> (select depthead from empdept where deptname='hr');
++----------+
+| empname  |
++----------+
+| Abhishek |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*>
+   /*> 4.   Select the name of the employee head who is permanent.
+   /*>
+   /*> */
+mysql>
+mysql> select empname,empid from employee where empid in(select emphead from employee) and
+    -> empid in(select empid from empsalary where ispermanent='yes');
+Empty set, 1 warning (0.01 sec)
+
+mysql>
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*>
+   /*> 5.   Select the name and email of the Dept Head who is not Permanent.
+   /*>
+   /*> */
+mysql>
+mysql> select empname,emailid from employee where empid in (select depthead from empdept)
+    -> and empid in(select empid from empsalary where ispermanent='no');
+Empty set, 1 warning (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*>
+   /*> 6.   Select the employee whose department off is monday.
+   /*>
+   /*> */
+mysql>
+mysql> select * from employee where department in (select deptid from empdept where dept_off='monday');
++-------+----------+------------+------------+--------------------+---------+
+| empid | empname  | Department | Contactno  | emailid            | emphead |
++-------+----------+------------+------------+--------------------+---------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |     105 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |     101 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |     102 |
++-------+----------+------------+------------+--------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*>
+   /*> 7.   select the indian clinets details.
+   /*>
+   /*> */
+mysql>
+mysql>
+mysql> select * from clienttable where cid = (select cid from country where cname='india');
++----------+------------+------+
+| clientid | clientname | cid  |
++----------+------------+------+
+| cl-1     | ABC Group  | c-1  |
+| cl-2     | PQR        | c-1  |
++----------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*>
+   /*> 8.   select the details of all employee working in development department.
+   /*>
+   /*> */
+mysql>
+mysql> select * from employee where department = (select deptid from empdept where deptname='development');
++-------+---------+------------+------------+-----------------+---------+
+| empid | empname | Department | Contactno  | emailid         | emphead |
++-------+---------+------------+------------+-----------------+---------+
+|   104 | Rahul   | E-102      | 1234567890 | rahul@yahoo.com |     105 |
++-------+---------+------------+------------+-----------------+---------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql>
+mysql>
+mysql> -- OTHER RELATED QUESTIONS ->
+mysql> /*
+   /*>
+   /*> Queries:-
+   /*> Simple Queries
+   /*> 1.   Select the detail of the employee whose name start with P.
+   /*> */
+mysql>
+mysql> select * from employee where empname regexp '^p.*$';
++-------+---------+------------+------------+-----------------+---------+
+| empid | empname | Department | Contactno  | emailid         | emphead |
++-------+---------+------------+------------+-----------------+---------+
+|   102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |     103 |
++-------+---------+------------+------------+-----------------+---------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 2.   How many permanent candidate take salary more than 5000.
+   /*>
+   /*> */
+mysql> select count(*) from empsalary where ispermanent='Yes' and salary>5000;
++----------+
+| count(*) |
++----------+
+|        0 |
++----------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 3.   Select the detail of employee whose emailId is in gmail.
+   /*>
+   /*> */
+mysql>
+mysql> select * from employee where emailid regexp '^.*@gmail.com$';
++-------+----------+------------+------------+--------------------+---------+
+| empid | empname  | Department | Contactno  | emailid            | emphead |
++-------+----------+------------+------------+--------------------+---------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |     105 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |     101 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |     102 |
++-------+----------+------------+------------+--------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 4.   Select the details of the employee who work either for department E-104 or E-102.
+   /*>
+   /*> */
+mysql>
+mysql>
+mysql> select deptname from empdept where deptid='E-102';
++-------------+
+| deptname    |
++-------------+
+| Development |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 6.  What is total salarythat is paid to permanent employees?
+   /*> */
+mysql>
+mysql>
+mysql> select sum(salary) from empsalary where ispermanent='yes';
++-------------+
+| sum(salary) |
++-------------+
+|        NULL |
++-------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 7.  List name of all employees whose name ends with a.
+   /*> */
+mysql>
+mysql> select * from employee where empname regexp '^.*a$';
++-------+---------+------------+------------+-----------------+---------+
+| empid | empname | Department | Contactno  | emailid         | emphead |
++-------+---------+------------+------------+-----------------+---------+
+|   101 | Isha    | E-101      | 1234567890 | isha@gmail.com  |     105 |
+|   102 | Priya   | E-104      | 1234567890 | priya@yahoo.com |     103 |
+|   103 | Neha    | E-101      | 1234567890 | neha@gmail.com  |     101 |
++-------+---------+------------+------------+-----------------+---------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 8.  List the number of department of employees in each project.
+   /*> */
+mysql>
+mysql> select count(empid) as employee, projectid from empproject group by projectid;
++----------+-----------+
+| employee | projectid |
++----------+-----------+
+|        2 | p-1       |
+|        1 | p-2       |
+|        2 | p-4       |
++----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 9.  How many project started in year 2010.
+   /*> */
+mysql>
+mysql> select count(*) from empproject where startyear=2010;
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 10.  How many project started and finished in the same year.
+   /*> */
+mysql>
+mysql> select * from empproject where startyear=endyear;
++-------+-----------+----------+-----------+---------+
+| empid | projectid | clientid | startyear | endyear |
++-------+-----------+----------+-----------+---------+
+|   101 | p-1       | Cl-1     |      2010 |    2010 |
++-------+-----------+----------+-----------+---------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> # -----------------------------------------------------------------------------------------------------------
+mysql>
+mysql> /*
+   /*> 11.  select the name of the employee whose name's 3rd charactor is 'h'.
+   /*> */
+mysql>
+mysql>  select * from employee where empname regexp '^..h.*$';
++-------+----------+------------+------------+--------------------+---------+
+| empid | empname  | Department | Contactno  | emailid            | emphead |
++-------+----------+------------+------------+--------------------+---------+
+|   101 | Isha     | E-101      | 1234567890 | isha@gmail.com     |     105 |
+|   103 | Neha     | E-101      | 1234567890 | neha@gmail.com     |     101 |
+|   104 | Rahul    | E-102      | 1234567890 | rahul@yahoo.com    |     105 |
+|   105 | Abhishek | E-101      | 1234567890 | abhishek@gmail.com |     102 |
++-------+----------+------------+------------+--------------------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+
