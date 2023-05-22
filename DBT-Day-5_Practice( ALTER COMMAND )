@@ -1,0 +1,215 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 58
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 233065db           |
+| aniket             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use 233065db;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_233065db  |
++---------------------+
+| bonus               |
+| clienttable         |
+| country             |
+| dept                |
+| dont_delete_this_db |
+| dummy               |
+| emp                 |
+| empdept             |
+| employee            |
+| empproject          |
+| empsalary           |
+| project             |
+| salgrade            |
++---------------------+
+13 rows in set (0.00 sec)
+
+mysql> -- IMPORTANT COMMANDS TO REMEMBER ->
+mysql> -- 1. ADD NEW COLUMN
+mysql>
+mysql> alter table dept
+    -> add deptLoc varchar(30);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc dept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DEPTNO   | int         | NO   |     | NULL    |       |
+| DNAME    | varchar(14) | YES  |     | NULL    |       |
+| location | varchar(40) | YES  |     | NULL    |       |
+| deptLoc  | varchar(30) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> -- 2.MODIFY COLUMN TYPE ->
+mysql>
+mysql> alter table dept
+    -> modify deptLoc int;
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc dept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DEPTNO   | int         | NO   |     | NULL    |       |
+| DNAME    | varchar(14) | YES  |     | NULL    |       |
+| location | varchar(40) | YES  |     | NULL    |       |
+| deptLoc  | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> -- 3.DELETE COLUMN TYPE ->
+mysql>
+mysql> alter table dept
+    -> drop column deptLoc;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc dept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DEPTNO   | int         | NO   |     | NULL    |       |
+| DNAME    | varchar(14) | YES  |     | NULL    |       |
+| location | varchar(40) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> -- 4.RENAME TABLE NAME ->
+mysql>
+mysql> alter table dept
+    -> rename to mydept;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc dept;
+ERROR 1146 (42S02): Table '233065db.dept' doesn't exist
+mysql> desc mydept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DEPTNO   | int         | NO   |     | NULL    |       |
+| DNAME    | varchar(14) | YES  |     | NULL    |       |
+| location | varchar(40) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> -- 5.ADD NEW CONSTRAINT ->
+mysql>
+mysql> alter table mydept
+    -> add primary key(deptno);
+Query OK, 0 rows affected (0.25 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mydept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DEPTNO   | int         | NO   | PRI | NULL    |       |
+| DNAME    | varchar(14) | YES  |     | NULL    |       |
+| location | varchar(40) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> -- 6.DROP PRIMARY CONSTRAINT ->
+mysql>
+mysql> alter table mydept
+    -> drop primary key;
+Query OK, 4 rows affected (0.08 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc mydept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DEPTNO   | int         | NO   |     | NULL    |       |
+| DNAME    | varchar(14) | YES  |     | NULL    |       |
+| location | varchar(40) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table mydept
+    -> rename to dept;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc dept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DEPTNO   | int         | NO   |     | NULL    |       |
+| DNAME    | varchar(14) | YES  |     | NULL    |       |
+| location | varchar(40) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> -- 7.TO FIND FOREIGN KEY CONSTRAINT ->
+mysql
+
+mysql> show create table empdept;
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                                                                                                                                                                                                                                                                          |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| empdept | CREATE TABLE `empdept` (
+  `DeptId` varchar(30) NOT NULL,
+  `Deptname` varchar(30) DEFAULT NULL,
+  `Dept_off` varchar(30) DEFAULT NULL,
+  `Depthead` int DEFAULT NULL,
+  PRIMARY KEY (`DeptId`),
+  KEY `fkid` (`Depthead`),
+  CONSTRAINT `empdept_ibfk_1` FOREIGN KEY (`Depthead`) REFERENCES `employee` (`empid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> -- 8.CHANGE COLUMN NAME ->
+mysql>
+mysql> alter table dept
+    -> change location loc varchar(30);
+Query OK, 4 rows affected (0.10 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc dept;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| DEPTNO | int         | NO   |     | NULL    |       |
+| DNAME  | varchar(14) | YES  |     | NULL    |       |
+| loc    | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> -- 9.ADD FOREIGN KEY -------->
+mysql>
+mysql> -- 10.DROP FOREIGN KEY -------->
+mysql>
+
+
+
+
+
+
+
