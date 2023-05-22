@@ -1,0 +1,335 @@
+Practicing More On JOINS ->
+
+1. Display empno,ename,sal,dname for all employees, 
+and also display departments in which
+no employees are there.
+
+select e.empno,e.ename,e.sal,d.dname,d.deptno
+from emp e right join dept d
+on e.deptno=d.deptno;
+
+select e.empno,e.ename,e.sal,d.dname,d.deptno
+from dept d left join emp e on
+d.deptno=e.deptno;
+
+-----------------------------------------------------
+
+2. Display empno,ename,sal,dname for all employees, 
+and also display employees for whom
+no department is assigned.
+
+
+select empno,ename,sal,dname 
+from dept d right join  emp e
+on e.deptno=d.deptno;
+
+--------------------------------------------------
+
+3. Display empno,ename,sal,dname for all employees, 
+and also display employees for whom no department 
+is assigned. And also display dept in which no 
+employees are there. 
+
+Rule for union --→ to use union both queries 
+should have same number of columns Corresponding 
+columns data type should match.
+
+
+select empno,ename,sal,dname
+from emp e right join dept d
+on e.deptno=d.deptno
+union
+select empno,ename,sal,dname
+from emp e left join dept d
+on e.deptno=d.deptno;
+
+
+-----------------------------------------------
+
+Q.Display empno,ename,sal,dname for all
+employees whose sal>average sal of deptno 10.
+
+(Use nested Query when we want to check condition 
+only; and use join when wanted to display output
+from multiple tables)
+
+select empno,ename,sal,dname 
+from emp e, dept d
+where e.deptno=d.deptno and
+sal > (select avg(sal) from emp 
+where deptno=10);
+
+-----------------------------------------------
+
+1. Display cname,fname,rname which are assigned to 
+courses also display faculties who are not assigned 
+to courses also display rooms which are not 
+assigned to the courses.
+(full join  question)
+-------------------------------------------------
+
+36. change job of smith to senior clerk.
+
+update emp set job='SENIOR CLERK' where ename='Smith';
+
+//to modify previous datatype->
+alter table tablename modify columnname datatype;
+
+-------------------------------------------------
+
+37. increase salary of all employees by 15% if they are 
+earning some commission.
+
+update emp set sal=sal+sal*0.15 where comm is not null;
+
+
+-------------------------------------------------
+
+
+38. list all employees with sal>smith's sal
+	
+select * from emp where sal > (select sal 
+from emp where ename='smith');
+
+-----------------------------------------------------
+
+39. list all employees who are working in smith's 
+department.
+
+select * from emp where deptno = (select deptno from
+emp where ename='smith');
+
+-----------------------------------------------------
+
+40. list all employees with sal < rajan's sal and 
+salary > revati's sal.
+
+select * from emp where sal between (select sal from emp where 
+ename='rajan') and
+(select sal from emp where ename='revati');
+
+------------------------------------------------------
+
+41. delete all employees working in alan's department
+
+DELETE FROM emp
+WHERE DEPTNO IN (
+    SELECT * FROM (
+        SELECT DEPTNO
+        FROM emp
+        WHERE ename = 'ALLEN'
+    ) AS temp
+);
+
+------------------------------------------------------
+
+42. change salary of Alan to the salary of Miller.
+
+
+
+
+------------------------------------------------------
+
+
+43. change salary of all emplees who working in 
+Wall's department to the salary of Miller.
+
+
+------------------------------------------------------
+
+
+44. list all employees with salary > either Smith's 
+salary or alan's sal.
+
+select * from emp where sal > (select sal from emp 
+where ename='smith') or (select sal from emp where 
+ename='allen');
+
+------------------------------------------------------
+45. list all employees who earn more than average 
+sal of dept 10.
+
+select * from emp where sal > (select avg(sal) from emp where
+deptno=10);
+
+------------------------------------------------------
+
+46. list all employees who earn more than average 
+sal of Alan's department.
+
+select * from emp where sal > (
+	select avg(sal) from emp
+	where deptno=(
+		select deptno from emp
+		where ename='allen'
+		)
+	);
+
+
+------------------------------------------------------
+
+47. list all employees who are working in purchase 
+department.
+
+select * from emp where deptno = (select deptno from dept
+where dname='purchase');
+
+
+------------------------------------------------------
+
+48. list all employees who earn more than average 
+salary of their own department.
+
+[DOUBT]
+select * from emp e where e.sal > (select avg(sal) from emp e2
+where e2.empno=e1.empno);
+
+------------------------------------------------------
+
+49. list all employees who earn sal < than their 
+managers salary
+
+
+
+-------------------------------------------------------
+
+
+50. list all employees who are earning more than 
+average salary of their job
+
+-------------------------------------------------------
+51. display employee name and department.
+
+select e.ename,d.deptno,d.dname
+from emp e left join dept d
+on e.deptno=d.deptno;
+
+-------------------------------------------------------
+
+
+52. display empno,name,department name and grade.
+(use emp,dept and salgrade table)
+
+select empno,ename,dname,grade,d.deptno 
+from emp e, dept d, salgrade s
+where e.deptno = d.deptno 
+and
+sal between losal and hisal;
+
+-------------------------------------------------------
+
+53. list all employees number,name, mgrno and 
+manager name.
+
+select e.empno,e.ename,m.ename as "Manager Name",
+m.empno as "Manager No"
+from emp e, emp m
+where e.mgr=m.empno;
+
+-------------------------------------------------------
+
+54. create following tables and solve following questions(primary keys are marked in yellow)
+foreign keys are marked in green.
+
+product((p)pid,pname,price,qty,(fk)cid,(fk)sid)
+salesman ((p)sid,sname,address)
+category((p)cid,cnam,descritpion)
+
+1. list all product name,their category name and name of 
+a person, who sold that product
+
+
+select p.pname,c.cname,s.sname 
+from product p,salesman s,category c
+where p.cid=c.cid and p.sid=s.sid;
+
+=====================================================
+
+2. list all product name and salesman name for all 
+salesman who stays in pune
+
+
+select p.pname,s.sname 
+from product p, salesman s
+where p.sid=s.sid and 
+s.city='Pune';
+
+=====================================================
+
+3. list all product name and category name
+
+select pname,cname 
+from product p,category c
+where p.cid=c.cid;
+
+---------------------------------------------------------
+
+55. create following tables and solve following 
+questions(primary keys are marked in yellow)
+foreign keys are marked in green
+
+faculty(fid,fname,spskill1,spskill2)
+courses(cid,cname,rid,fid)
+room(roomid,rname,rloc)
+
+faculty
++-----+----------+----------+
+| fid | fname    | skills   |
++-----+----------+----------+
+|   1 | NARENDRA | DATABASE |
+|   2 | SARIKA   | JAVA     |
+|   3 | PRITI    | ML       |
++-----+----------+----------+	  		  
+
+courses
++-----+--------+--------------+------+------+
+| CID | CNAME  | PARTICIPANTS | FID  | RID  |
++-----+--------+--------------+------+------+
+|  10 | DAC    |          224 |    2 |  401 |
+|  11 | DBDA   |           52 |    1 | NULL |
+|  12 | DITISS |           60 | NULL | NULL |
+| 151 | DIOT   |           60 |  105 |   12 |
++-----+--------+--------------+------+------+
+
+Room
++-----+--------+-----------+
+| rid | rname  | loc       |
++-----+--------+-----------+
+| 103 | MOGRA  | 1ST FLOOR |
+| 401 | LOTUS  | 4TH FLOOR |
+| 402 | JASMIN | 4TH FLOOR |
++-----+--------+-----------+
+
+1. list all courses for which no room is assigned and 
+all rooms for which are available
+
+
+
+
+
+
+=====================================================
+
+2. list all faculties who are not allocated to any 
+course and rooms which are not allocated to any course
+
+=====================================================
+
+3. list all rooms which are allocated or not allocated
+to any courses
+
+=====================================================
+
+4. list all rooms which are not allocated to any courses
+
+=====================================================
+
+5. display courses and faculty assigned to those 
+courses whose special skill is database
+
+=====================================================
+
+6. display time table --- it should contain course 
+details , faculty and room details
+
+
